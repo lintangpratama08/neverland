@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AccountListingController;
+use App\Http\Controllers\AdminDataController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MediaAssetController;
 use App\Http\Controllers\OrderController;
@@ -34,6 +35,7 @@ Route::prefix('api')->middleware('throttle:api')->group(function (): void {
     });
 
     Route::middleware(['auth', 'admin'])->group(function (): void {
+        Route::post('admin/reset-data', [AdminDataController::class, 'reset'])->middleware('throttle:reset-data');
         Route::get('admin/members', [AuthController::class, 'adminMembers']);
         Route::post('admin/members', [AuthController::class, 'storeMember']);
         Route::put('admin/members/{user}', [AuthController::class, 'updateMember']);

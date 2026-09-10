@@ -28,4 +28,12 @@ class AdminAuthorizationTest extends TestCase
         $this->assertContains('auth', $route->gatherMiddleware());
         $this->assertContains('admin', $route->gatherMiddleware());
     }
+
+    public function test_reset_data_route_requires_authentication_and_admin_middleware(): void
+    {
+        $route = Route::getRoutes()->match(Request::create('/api/admin/reset-data', 'POST'));
+
+        $this->assertContains('auth', $route->gatherMiddleware());
+        $this->assertContains('admin', $route->gatherMiddleware());
+    }
 }

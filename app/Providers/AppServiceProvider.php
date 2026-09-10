@@ -38,5 +38,8 @@ class AppServiceProvider extends ServiceProvider
 
         RateLimiter::for('presence', fn (Request $request) => Limit::perMinute(30)
             ->by($request->ip()));
+
+        RateLimiter::for('reset-data', fn (Request $request) => Limit::perHour(2)
+            ->by((string) $request->user()?->id));
     }
 }
